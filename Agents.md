@@ -25,3 +25,9 @@ This is a AI-Workflow Share demo code, for learning and sharing AI-Workflow.show
 - Don't use useEffect for data fetching
 - Don't create global state without explicit approval
 - Don't bypass TypeScript with 'any' types
+
+### MCP
+
+Always use context7 when I need code generation, setup or configuration steps, or 
+library/API documentation. This means you should automatically use the Context7 MCP 
+tools to resolve library id and get library docs without me having to explicitly ask.
