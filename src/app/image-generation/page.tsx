@@ -7,7 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Download, Image as ImageIcon, Sparkles, AlertCircle } from 'lucide-react';
+import { OrbitingCircles } from '@/components/ui/orbiting-circles';
+import { Ripple } from '@/components/ui/ripple';
+import { Download, ImageIcon, Sparkles, AlertCircle, Wand2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface GeneratedImage {
@@ -76,159 +78,190 @@ export default function ImageGeneration() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-3 flex items-center justify-center gap-2">
-          <Sparkles className="w-8 h-8 text-purple-600" />
-          AI Image Generator
-        </h1>
-        <p className="text-lg text-gray-600">Create stunning images from text descriptions</p>
-      </div>
-
-      {/* Generation Form */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ImageIcon className="w-5 h-5" />
-            Generate Image
-          </CardTitle>
-          <CardDescription>
-            Describe what you want to see and let AI create it for you
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleGenerate} className="space-y-4">
-            <div className="flex gap-3">
-              <Input
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="A beautiful landscape with mountains and a lake..."
-                className="flex-1"
-                disabled={isGenerating}
-              />
-              <Button
-                type="submit"
-                disabled={!prompt.trim() || isGenerating}
-                className="px-6"
-              >
-                {isGenerating ? (
-                  <>
-                    <Sparkles className="w-4 h-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  'Generate'
-                )}
-              </Button>
-            </div>
-
-            {/* Quick prompt buttons */}
-            <div className="space-y-2">
-              <p className="text-sm text-gray-500">Try these prompts:</p>
-              <div className="flex flex-wrap gap-2">
-                {predefinedPrompts.map((promptText) => (
-                  <Button
-                    key={promptText}
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    disabled={isGenerating}
-                    onClick={() => setPrompt(promptText)}
-                    className="text-xs"
-                  >
-                    {promptText}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </form>
-
-          {error && (
-            <Alert className="mt-4" variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Loading State */}
-      {isGenerating && (
-        <Card className="mb-8">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Sparkles className="w-5 h-5 animate-spin text-purple-600" />
-              <span className="text-lg font-medium">Creating your image...</span>
-            </div>
-            <Skeleton className="w-full h-64 rounded-lg" />
-            <div className="mt-3">
-              <Skeleton className="h-4 w-3/4" />
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Generated Images */}
-      {generatedImages.length > 0 && (
-        <div className="space-y-6">
-          <h2 className="text-2xl font-semibold">Generated Images</h2>
-          <div className="grid gap-6">
-            {generatedImages.map((imageData) => (
-              <Card key={imageData.timestamp} className="overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="relative">
-                    <Image
-                      src={`data:image/png;base64,${imageData.image}`}
-                      alt={imageData.prompt}
-                      width={1024}
-                      height={1024}
-                      className="w-full h-auto"
-                      priority
-                    />
-                    <div className="absolute top-3 right-3">
-                      <Button
-                        onClick={() => downloadImage(imageData)}
-                        size="sm"
-                        variant="secondary"
-                        className="backdrop-blur-sm bg-white/80 hover:bg-white/90"
-                      >
-                        <Download className="w-4 h-4 mr-1" />
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <p className="font-medium mb-2">{imageData.prompt}</p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Badge variant="outline" className="text-xs">
-                        {imageData.size}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        DALL-E 3
-                      </Badge>
-                      <span>•</span>
-                      <span>{new Date(imageData.timestamp).toLocaleString()}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+    <div className="min-h-screen bg-background">
+      <div className="max-w-4xl mx-auto p-6">
+        {/* Header */}
+        <div className="text-center mb-12 space-y-4">
+          <h1 className="text-5xl font-bold text-foreground">
+            AI Image Generator
+          </h1>
+          <p className="text-xl text-muted-foreground">
+            Create stunning images from text descriptions
+          </p>
         </div>
-      )}
 
-      {/* Empty State */}
-      {generatedImages.length === 0 && !isGenerating && (
-        <Card className="text-center py-12">
+        {/* Generation Form */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Wand2 className="w-5 h-5" />
+              Generate Image
+            </CardTitle>
+            <CardDescription>
+              Describe what you want to see and let AI create it for you
+            </CardDescription>
+          </CardHeader>
           <CardContent>
-            <ImageIcon className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium mb-2">No images generated yet</h3>
-            <p className="text-gray-500">
-              Enter a prompt above to create your first AI-generated image
-            </p>
+            <form onSubmit={handleGenerate} className="space-y-4">
+              <div className="flex gap-3">
+                <Input
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  placeholder="A beautiful landscape with mountains and a lake..."
+                  className="flex-1"
+                  disabled={isGenerating}
+                />
+                <Button
+                  type="submit"
+                  disabled={!prompt.trim() || isGenerating}
+                  className="px-6"
+                >
+                  {isGenerating ? (
+                    <>
+                      <div className="relative w-4 h-4 mr-2">
+                        <OrbitingCircles
+                          className="w-4 h-4"
+                          duration={20}
+                          delay={20}
+                          radius={6}
+                        >
+                          <div className="w-1 h-1 bg-current rounded-full" />
+                        </OrbitingCircles>
+                      </div>
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Generate
+                    </>
+                  )}
+                </Button>
+              </div>
+
+              {/* Quick prompt buttons */}
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Try these prompts:</p>
+                <div className="flex flex-wrap gap-2">
+                  {predefinedPrompts.map((promptText) => (
+                    <Button
+                      key={promptText}
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={isGenerating}
+                      onClick={() => setPrompt(promptText)}
+                      className="text-xs"
+                    >
+                      {promptText}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </form>
+
+            {error && (
+              <Alert className="mt-4" variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
           </CardContent>
         </Card>
-      )}
+
+        {/* Loading State with Magic UI */}
+        {isGenerating && (
+          <Card className="mb-8">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="relative w-5 h-5">
+                  <OrbitingCircles
+                    className="w-5 h-5"
+                    duration={20}
+                    delay={20}
+                    radius={8}
+                  >
+                    <div className="w-1.5 h-1.5 bg-foreground rounded-full" />
+                  </OrbitingCircles>
+                </div>
+                <span className="text-lg font-medium">Creating your image...</span>
+              </div>
+
+              {/* Animated skeleton with ripple effect */}
+              <div className="relative">
+                <Skeleton className="w-full h-64 rounded-lg" />
+                <Ripple className="absolute inset-0 rounded-lg" />
+              </div>
+
+              <div className="mt-3">
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Generated Images */}
+        {generatedImages.length > 0 && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-foreground">Generated Images</h2>
+            <div className="grid gap-6">
+              {generatedImages.map((imageData) => (
+                <Card key={imageData.timestamp} className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="relative group">
+                      <Image
+                        src={`data:image/png;base64,${imageData.image}`}
+                        alt={imageData.prompt}
+                        width={1024}
+                        height={1024}
+                        className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <Button
+                          onClick={() => downloadImage(imageData)}
+                          size="sm"
+                          variant="secondary"
+                        >
+                          <Download className="w-4 h-4 mr-1" />
+                          Download
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="font-medium text-foreground mb-3">{imageData.prompt}</p>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Badge variant="secondary">
+                          {imageData.size}
+                        </Badge>
+                        <Badge variant="outline">
+                          DALL-E 3
+                        </Badge>
+                        <span>•</span>
+                        <span>{new Date(imageData.timestamp).toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {generatedImages.length === 0 && !isGenerating && (
+          <Card className="text-center py-16">
+            <CardContent>
+              <ImageIcon className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium text-foreground mb-2">No images generated yet</h3>
+              <p className="text-muted-foreground">
+                Enter a prompt above to create your first AI-generated image
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }
