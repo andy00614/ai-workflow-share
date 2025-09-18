@@ -13,10 +13,11 @@
 - **主力**: Claude Code
 - **辅助**: Windsurf + CodeX
 
-### 原型设计
+### 原型 ｜ 设计
 - Claude Code subagent
 - [v0.dev](http://v0.dev)
 - SuperDesign
+- https://tweakcn.com/
 
 ### 项目分析
 - **Project Packer**: repomix 将项目打包为 AI 友好格式
@@ -110,6 +111,14 @@
 
 ### 语音工具
 - **[Wispr Flow](https://wisprflow.ai/)**: 语音编程辅助
+
+## 总结：如何用 AI 辅助开发一款产品
+1）编辑产品文档(越详细越好) -> 
+2）使用 superdesign,或者 sub-agent 去生成一个 ascii 原型图 -> 
+3）根据原型图，让 ai 生成 html 格式的交互模板（利用 gitworktree 生成多个版本）-> 
+4）基于 shadcn 技术栈去让 ai 实现 html
+5）基于一个限制完善的 agent.md，claudecode + mcp 去让 ai 驱动的修改代码，完成想要的逻辑
+6) https://tweakcn.com/ 找到最适合自己的主题
 
 ## 参考资源
 
