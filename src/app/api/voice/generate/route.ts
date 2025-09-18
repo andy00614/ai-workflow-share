@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     });
 
     // 返回音频数据
-    return new NextResponse(result.audio.uint8Array, {
+    return new NextResponse(Buffer.from(result.audio.uint8Array), {
       headers: {
         'Content-Type': result.audio.mediaType || 'audio/mpeg',
         'Content-Length': result.audio.uint8Array.length.toString(),

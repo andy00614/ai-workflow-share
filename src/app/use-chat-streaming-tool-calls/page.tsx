@@ -53,8 +53,8 @@ export default function Chat() {
     });
 
   return (
-    <div className='h-full flex flex-col overflow-hidden'>
-      <div className='flex-1 flex flex-col min-h-[calc(100vh-4rem)]'>
+    <div className='h-[calc(100vh-3rem)] flex flex-col overflow-hidden'>
+      <div className='flex-1 flex flex-col min-h-0'>
         {/* 主要聊天区域 */}
         <div className='flex-1 overflow-hidden'>
           <div className='h-full max-w-5xl mx-auto px-6 py-4'>
