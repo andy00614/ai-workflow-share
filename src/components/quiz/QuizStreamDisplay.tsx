@@ -18,7 +18,7 @@ export function QuizStreamDisplay({ partialQuiz, isComplete, onComplete }: QuizS
   useEffect(() => {
     if (partialQuiz.questions) {
       const timer = setTimeout(() => {
-        if (displayedQuestions < partialQuiz.questions.length) {
+        if (partialQuiz.questions && displayedQuestions < partialQuiz.questions.length) {
           setDisplayedQuestions(prev => prev + 1);
         }
       }, 500);

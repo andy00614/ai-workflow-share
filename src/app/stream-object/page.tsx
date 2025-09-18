@@ -204,6 +204,7 @@ export default function StreamObjectDemo() {
                 <h3 className="text-xl font-semibold">Course Chapters</h3>
               </div>
               {object.chapters.map((chapter, index) => (
+                chapter && (
                 <Card key={index} className="overflow-hidden">
                   <CardHeader
                     className="cursor-pointer hover:bg-gray-50 transition-colors"
@@ -261,6 +262,7 @@ export default function StreamObjectDemo() {
                     </CardContent>
                   )}
                 </Card>
+                )
               ))}
             </div>
           )}
@@ -274,6 +276,7 @@ export default function StreamObjectDemo() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {object.resources.map((resource, index) => (
+                    resource && (
                     <div key={index} className="flex items-start gap-3 p-3 rounded-lg border bg-gray-50/50">
                       <span className="text-xl">{getResourceIcon(resource.type)}</span>
                       <div className="flex-1 min-w-0">
@@ -290,6 +293,7 @@ export default function StreamObjectDemo() {
                         )}
                       </div>
                     </div>
+                    )
                   ))}
                 </div>
               </CardContent>

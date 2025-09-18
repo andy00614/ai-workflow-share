@@ -242,6 +242,6 @@ async function main() {
 import { z } from 'zod';
 
 // 运行主程序
-if (import.meta.main) {
-  main().catch(console.error);
-}
+// if (import.meta.main) {
+//   main().catch(console.error);
+// }
