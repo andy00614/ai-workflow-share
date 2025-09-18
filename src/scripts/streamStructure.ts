@@ -1,4 +1,3 @@
-import { xai } from '@ai-sdk/xai';
 import { streamObject } from 'ai';
 import { z } from 'zod';
 
@@ -8,9 +7,8 @@ const schemaOfOutline = z.object({
     title: z.array(z.string()),
 });
 
-
 const { partialObjectStream } = streamObject({
-    model: xai('grok-3-fast'),
+    model: 'azure/gpt-4o',
     schema: schemaOfOutline,
     prompt,
 });

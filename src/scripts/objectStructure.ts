@@ -1,4 +1,3 @@
-import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
 import { z } from 'zod';
 
@@ -14,7 +13,7 @@ const schemaOfOutline = z.object({
 });
 
 const { object } = await generateObject({
-    model: openai('gpt-5-mini'),
+    model: 'azure/gpt-4.1-nano',
     schema: schemaOfOutline,
     prompt,
 });
