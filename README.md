@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Workflow Share
 
-## Getting Started
+AI 工作流演示项目，展示 AI SDK 和相关工具的实际应用。
 
-First, run the development server:
+## 快速开始
 
 ```bash
+cp env.example .env
+bun install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 功能演示
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 基础聊天 - AI SDK 基本用法
+- 流式对象 - 结构化数据生成
+- 工具调用 - 天气查询和知识大纲
+- 图像生成 - DALL-E 3 集成
+- 测验系统 - 智能问答生成
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 相关文档
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[我的 AI 工作流](my-ai-flow.md)
