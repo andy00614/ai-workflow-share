@@ -8,13 +8,11 @@ const routes = [
   { href: '/', label: 'Home' },
   { href: '/base', label: 'Base Chat' },
   { href: '/chapters-demo', label: 'Chapters' },
-  { href: '/chat-file', label: 'Chat File' },
-  { href: '/image-generation', label: 'Image Gen' },
   { href: '/prompt-input', label: 'Prompt Input' },
-  { href: '/quiz-agent', label: 'Quiz Agent' },
-  { href: '/quiz-chat', label: 'Quiz Chat' },
   { href: '/stream-object', label: 'Stream Object' },
   { href: '/use-chat-streaming-tool-calls', label: 'Tool Calls' },
+  { href: '/image-generation', label: 'Image Gen' },
+  { href: '/voice', label: 'Voice' },
 ];
 
 export function Navigation() {

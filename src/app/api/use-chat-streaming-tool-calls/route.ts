@@ -69,8 +69,9 @@ export async function POST(req: Request) {
     system:
       'You are a helpful assistant that can help with weather information and knowledge outlines.' +
       'When users ask about weather, use the showWeatherInformation tool.' +
-      'When users ask about a knowledge topic or need an outline of knowledge points, use the showKnowledgeOutline tool to create a structured knowledge outline with key points, events, figures, and concepts.' +
-      'Always use the appropriate tool to display information to the user instead of just talking about it.',
+      'ONLY use the knowledge outline tools when users explicitly express learning intent with phrases like "我想学习", "学习大纲", "知识大纲", "help me learn", "study outline", or directly ask for a knowledge structure/outline.' +
+      'For general knowledge questions, provide direct answers without using the knowledge outline tools.' +
+      'The knowledge outline should focus on knowledge points and concepts, not learning paths or study plans.',
     tools: {
       // server-side tool with execute function:
       getWeatherInformation: {
@@ -102,7 +103,7 @@ export async function POST(req: Request) {
       },
       // server-side tool for generating knowledge outlines:
       generateKnowledgeOutline: {
-        description: 'Generate a structured knowledge outline for a given topic',
+        description: 'Generate a structured knowledge outline ONLY when users explicitly want to learn a topic or request a knowledge outline. Focus on knowledge points and concepts, not study plans.',
         inputSchema: z.object({
           topic: z.string().describe('The knowledge topic to create an outline for'),
           category: z.string().optional().describe('The category of knowledge (e.g., history, science, literature)'),
@@ -168,29 +169,32 @@ export async function POST(req: Request) {
             };
           }
 
-          // Generic structure for other topics
+          // Generic structure for other topics - focus on knowledge points
           return {
             topic,
-            description: `${topic}知识点大纲`,
+            description: `${topic}核心知识点`,
             category,
             structure: [
               {
                 id: `${outlineId}-1`,
-                title: `${topic}概述`,
-                description: `${topic}的基本概念和定义`,
-                keyPoints: [`${topic}的定义`, `${topic}的特点`, `${topic}的分类`],
+                title: `${topic}基础概念`,
+                description: `${topic}的核心定义和基本概念`,
+                keyPoints: [`基本定义`, `核心特征`, `重要术语`],
+                concepts: [`基本概念`, `核心理论`]
               },
               {
                 id: `${outlineId}-2`,
-                title: `${topic}的发展历程`,
-                description: `${topic}的历史发展和演变过程`,
-                keyPoints: [`起源`, `发展阶段`, `现状`],
+                title: `${topic}重要理论`,
+                description: `${topic}领域的主要理论和原理`,
+                keyPoints: [`主要理论`, `核心原理`, `重要法则`],
+                concepts: [`理论框架`, `基本原理`]
               },
               {
                 id: `${outlineId}-3`,
-                title: `${topic}的应用`,
-                description: `${topic}在实际中的应用和意义`,
-                keyPoints: [`实际应用`, `影响意义`, `未来发展`],
+                title: `${topic}关键要点`,
+                description: `${topic}的核心知识要点和重点内容`,
+                keyPoints: [`核心要点`, `重要内容`, `关键知识`],
+                concepts: [`重点知识`, `核心内容`]
               }
             ]
           };
@@ -199,7 +203,7 @@ export async function POST(req: Request) {
       // client-side tool that displays knowledge outline to the user:
       showKnowledgeOutline: {
         description:
-          'Show a structured knowledge outline to the user. Always use this tool to display knowledge points, key concepts, and topic structures.',
+          'Display a structured knowledge outline ONLY when users explicitly request learning materials or knowledge outlines. Shows knowledge points, key concepts, and topic structures (NOT study plans).',
         inputSchema: KnowledgeOutlineSchema,
       },
     },
